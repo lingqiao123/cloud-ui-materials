@@ -1,5 +1,13 @@
 import { defineColor } from './colorsname.js';
 
+function isString(value) {
+    return Object.prototype.toString.call(value) === '[object String]';
+}
+
+function isInteger(value) {
+    return typeof value === 'number' && value % 1 === 0;
+}
+
 class Color {
     // r, g, b, a
     constructor(r = 0, g = 0, b = 0, a = 1) {
@@ -12,18 +20,12 @@ class Color {
         Object.assign(this, Color.RGB2HSV(this.r, this.g, this.b));
     }
 
-
     toArray() {
         return [this.r, this.g, this.b, this.a];
     }
 
-    // toString() {
-    //     Just use default
-    // }
-
-    toHEX(alpha) {
+    toHEX() {
         const fix = (num) => (num.length === 1 ? '0' + num : num).toUpperCase();
-
         return '#' + fix(this.r.toString(16)) + fix(this.g.toString(16)) + fix(this.b.toString(16));
     }
 
@@ -45,7 +47,6 @@ class Color {
 
     getHSV() {
         /* eslint-disable new-cap */
-        // return Color.RGB2HSV(this.r, this.g, this.b);
         return { h: this.h, s: this.s, v: this.v };
     }
 
@@ -58,7 +59,6 @@ class Color {
 
     getHSL() {
         /* eslint-disable new-cap */
-        // const hsv = Color.RGB2HSV(this.r, this.g, this.b);
         return Color.HSV2HSL(this.h, this.s, this.v);
     }
 
