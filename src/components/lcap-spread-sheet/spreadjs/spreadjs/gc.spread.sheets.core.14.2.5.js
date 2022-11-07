@@ -4618,22 +4618,27 @@ module.exports = function (GC) {
                     var zindex = getPreferredZIndex(host) + 1000;
                     domUtil_1.GC$(cellWrapperElement).css('z-index', zindex);
                     var editor = getDOMElement(this.editorType);
-                    domUtil_1.GC$(editor).css({
-                        'font': 'normal 11pt calibri',
-                        'outline': cssNone,
-                        'resize': cssNone,
-                        'border': cssNone,
-                        'padding': '1px',
-                        'vertical-align': 'top',
-                        'min-height': '0px',
-                        'box-sizing': 'content-box',
-                        'background': 'transparent'
-                    }).css(cssWordWrap, cssNormal).attr({
-                        tabindex: -1,
-                        autocomplete: 'off',
-                        contenteditable: true,
-                        'data-editorSource': 'TextCell'
-                    }).css(cssOverflow, cssHidden).attr(attrGcUIElement, 'gcEditingInput');
+                    domUtil_1.GC$(editor)
+                        .css({
+                            'font': 'normal 11pt calibri',
+                            'outline': cssNone,
+                            'resize': cssNone,
+                            'border': cssNone,
+                            'padding': '1px',
+                            'vertical-align': 'top',
+                            'min-height': '0px',
+                            'box-sizing': 'content-box',
+                            'background': 'transparent'
+                        })
+                        .css(cssWordWrap, cssNormal)
+                        .attr({
+                            tabindex: -1,
+                            autocomplete: 'off',
+                            contenteditable: true,
+                            'data-editorSource': 'TextCell'
+                        })
+                        .css(cssOverflow, cssHidden)
+                        .attr(attrGcUIElement, 'gcEditingInput');
                     if (browser.safari) {
                         domUtil_1.GC$(editor).css('-webkit-user-select', 'auto');
                     }
@@ -5427,7 +5432,9 @@ module.exports = function (GC) {
 
             var ScrollbarAppearance;
             (function (ScrollbarAppearance) {
+                // 指定类似于 excel 的经典滚动条外观。
                 ScrollbarAppearance[ScrollbarAppearance['skin'] = 0] = 'skin';
+                // 指定可定制的时尚移动滚动条外观。
                 ScrollbarAppearance[ScrollbarAppearance['mobile'] = 1] = 'mobile';
             })(ScrollbarAppearance = exports.ScrollbarAppearance || (exports.ScrollbarAppearance = {}));
 
@@ -5472,7 +5479,9 @@ module.exports = function (GC) {
             // 行或列调整为零时的绘图策略
             var ResizeZeroIndicator;
             (function (ResizeZeroIndicator) {
+                // 
                 ResizeZeroIndicator[ResizeZeroIndicator['default'] = 0] = 'default';
+                // 将行或列的大小调整为零时绘制两条短线
                 ResizeZeroIndicator[ResizeZeroIndicator['enhanced'] = 1] = 'enhanced';
             })(ResizeZeroIndicator = exports.ResizeZeroIndicator || (exports.ResizeZeroIndicator = {}));
 
@@ -7945,7 +7954,6 @@ module.exports = function (GC) {
             if (!WINDOW._gcGlobal) {
                 WINDOW._gcGlobal = new _Global();
             }
-
             var _ThemeStyleHelper = (function () {
                 function _ThemeStyleHelper() { }
                 _ThemeStyleHelper._getString = function (visualState) {
@@ -7960,21 +7968,24 @@ module.exports = function (GC) {
                     return dict[visualState] || '';
                 };
                 _ThemeStyleHelper._getVisualStateThemeStyle = function (visualState, cssClass) {
-                    var cacheName = _ThemeStyleHelper._getString(visualState) + cssClass, styleCache = _ThemeStyleHelper.styleCache;
+                    var cacheName = _ThemeStyleHelper._getString(visualState) + cssClass;
+                    var styleCache = _ThemeStyleHelper.styleCache;
                     if (!styleCache[cacheName]) {
                         styleCache[cacheName] = globalPrototype._getExternalThemeStyle(visualState, cssClass);
                     }
                     return styleCache[cacheName];
                 };
                 _ThemeStyleHelper._getCssClassThemeStyle = function (cssClass) {
-                    var cacheName = cssClass, styleCache = _ThemeStyleHelper.styleCache;
+                    var cacheName = cssClass;
+                    var styleCache = _ThemeStyleHelper.styleCache;
                     if (!styleCache[cacheName]) {
                         styleCache[cacheName] = globalPrototype._getStyleByCssClass(cssClass);
                     }
                     return styleCache[cacheName];
                 };
                 _ThemeStyleHelper._getContentThemeStyle = function (cssClass) {
-                    var cacheName = 'content' + cssClass, styleCache = _ThemeStyleHelper.styleCache;
+                    var cacheName = 'content' + cssClass;
+                    var styleCache = _ThemeStyleHelper.styleCache;
                     if (!styleCache[cacheName]) {
                         styleCache[cacheName] = globalPrototype._getThemeContentStyle(cssClass);
                     }
@@ -14591,7 +14602,45 @@ module.exports = function (GC) {
             var adjustFontWithFallback = common_1._util._adjustFontWithFallback;
             var CultureManager = Common_1.Common.CultureManager;
             var convertToInt = parseInt;
-            var WINDOW = window, DOCUMENT = document, keyword_null = null, Math_round = Math.round, Math_min = Math.min, Math_floor = Math.floor, Math_abs = Math.abs, CONST_NUMBER = 'number', E_MOUSEDOWN = 'mousedown', E_MOUSEMOVE = 'mousemove', E_MOUSEUP = 'mouseup', E_MOUSEENTER = 'mouseenter', E_MOUSELEAVE = 'mouseleave', E_SCROLL = 'scroll', E_RESIZE = 'resize', E_FOCUS = 'focus', NS_SPREAD = '.gcSpread', NS_SPREADINTERNAL = '.gcSpreadInternal', NS_SCROLLBAR = '.gcScrollbar', TAG_SPAN = 'span', TAG_DIV = 'div', TAG_TABLE = 'table', PIXEL = 'px', CSS_HUNDRED_PERCENT = '100%', CSS_SCROLL_HANDLE = 'gc-scroll-handle', CSS_SCROLLBAR = 'gc-scroll-bar', CSS_NONE = 'none', CSS_DISPLAY = 'display', CSS_BLOCK = 'block', CSS_ABSOLUTE = 'absolute', CSS_CONTENT_BOX = 'content-box', CSS_SOLID = 'solid', SCROLLBAR_PART_CLASS = ' ui-widget-header ui-state-default btn btn-default', CSS_CLASS_SCROLLBAR_MOBILE_CONTAINER = 'gc-scroll-mobile-container', CSS_CLASS_SCROLLBAR_MOBILE_HORIZONTAL = 'gc-scroll-mobile-container-horizontal', CSS_CLASS_SCROLLBAR_MOBILE_VERTICAL = 'gc-scroll-mobile-container-vertical', CSS_CLASS_SCROLLBAR_MOBILE_HOST_HOVERING = 'gc-scroll-mobile-spread-hovering', CSS_CLASS_SCROLLBAR_STATE_HIDE = 'gc-scroll-mobile-state-hide', CSS_CLASS_SCROLLBAR_STATE_HOVER = 'gc-scroll-mobile-state-hover';
+            var WINDOW = window;
+            var DOCUMENT = document;
+            var keyword_null = null;
+            var Math_round = Math.round;
+            var Math_min = Math.min;
+            var Math_floor = Math.floor;
+            var Math_abs = Math.abs;
+            var CONST_NUMBER = 'number';
+            var E_MOUSEDOWN = 'mousedown';
+            var E_MOUSEMOVE = 'mousemove';
+            var E_MOUSEUP = 'mouseup';
+            var E_MOUSEENTER = 'mouseenter';
+            var E_MOUSELEAVE = 'mouseleave';
+            var E_SCROLL = 'scroll';
+            var E_RESIZE = 'resize';
+            var E_FOCUS = 'focus';
+            var NS_SPREAD = '.gcSpread';
+            var NS_SPREADINTERNAL = '.gcSpreadInternal';
+            var NS_SCROLLBAR = '.gcScrollbar';
+            var TAG_SPAN = 'span';
+            var TAG_DIV = 'div';
+            var TAG_TABLE = 'table';
+            var PIXEL = 'px';
+            var CSS_HUNDRED_PERCENT = '100%';
+            var CSS_SCROLL_HANDLE = 'gc-scroll-handle';
+            var CSS_SCROLLBAR = 'gc-scroll-bar';
+            var CSS_NONE = 'none';
+            var CSS_DISPLAY = 'display';
+            var CSS_BLOCK = 'block';
+            var CSS_ABSOLUTE = 'absolute';
+            var CSS_CONTENT_BOX = 'content-box';
+            var CSS_SOLID = 'solid';
+            var SCROLLBAR_PART_CLASS = ' ui-widget-header ui-state-default btn btn-default';
+            var CSS_CLASS_SCROLLBAR_MOBILE_CONTAINER = 'gc-scroll-mobile-container';
+            var CSS_CLASS_SCROLLBAR_MOBILE_HORIZONTAL = 'gc-scroll-mobile-container-horizontal';
+            var CSS_CLASS_SCROLLBAR_MOBILE_VERTICAL = 'gc-scroll-mobile-container-vertical';
+            var CSS_CLASS_SCROLLBAR_MOBILE_HOST_HOVERING = 'gc-scroll-mobile-spread-hovering';
+            var CSS_CLASS_SCROLLBAR_STATE_HIDE = 'gc-scroll-mobile-state-hide';
+            var CSS_CLASS_SCROLLBAR_STATE_HOVER = 'gc-scroll-mobile-state-hover';
             var $ = WINDOW.jQuery;
             var CULTURE_CHANGED_EVENT = 'cultureChanged', STORE_KEY = 'workbook', GC_UIELEMENT = 'gcUIElement', NO_USER_SELECT = 'gc-no-user-select', VISIBLE = 'visible', OVERFLOW = 'overflow';
             var EN_CULTURE = 'en-US';
@@ -14747,7 +14796,8 @@ module.exports = function (GC) {
                 };
                 ScrollService._scrollMouseMove = function (e) {
                     var resource = getSR();
-                    var hostWorkbook = e.data, scrollbar = e.scrollbar;
+                    var hostWorkbook = e.data;
+                    var scrollbar = e.scrollbar;
                     if (hostWorkbook.options.enableAccessibility) {
                         var scrollbarOffset = domUtil_1.GC$(scrollbar._getScrollbar()).offset();
                         var info = scrollbar.hitTest(e.x - scrollbarOffset.left, e.y - scrollbarOffset.top);
@@ -14816,7 +14866,8 @@ module.exports = function (GC) {
                         self._timer = keyword_null;
                     }
                     if (sheet) {
-                        var oldTopRow = sheet._scrollTopRow, oldTopRowOffset = sheet._scrollTopRowOffset;
+                        var oldTopRow = sheet._scrollTopRow;
+                        var oldTopRowOffset = sheet._scrollTopRowOffset;
                         var touchIgnoreJudge = !isNullOrUndefined(oldTopRowInTouch);
                         if (!touchIgnoreJudge && newTopRow === oldTopRow && newTopRowOffset === oldTopRowOffset) {
                             return;
@@ -14841,10 +14892,23 @@ module.exports = function (GC) {
                             }
                             return;
                         }
-                        var painted = false, options = sheet.options, offsetTop = options.sheetAreaOffset.top;
+                        var painted = false;
+                        var options = sheet.options;
+                        var offsetTop = options.sheetAreaOffset.top;
                         var adj = offsetTop + 2;
-                        var bounds = sheet._bounds, layout = sheet._getSheetLayout(), viewportY = layout._viewportY, viewportHeight = sheet._getActualViewportHeight(layout), grayAreaHeight = layout._grayAreaHeight, frozenTrailingY = layout._frozenTrailingY, frozenTrailingHeight = layout._frozenTrailingHeight, width = layout.width + options.sheetAreaOffset.left, height = void 0, x = void 0, y = void 0;
-                        var render = sheet._render, ctx = render._getCtx();
+                        var bounds = sheet._bounds;
+                        var layout = sheet._getSheetLayout();
+                        var viewportY = layout._viewportY;
+                        var viewportHeight = sheet._getActualViewportHeight(layout);
+                        var grayAreaHeight = layout._grayAreaHeight;
+                        var frozenTrailingY = layout._frozenTrailingY;
+                        var frozenTrailingHeight = layout._frozenTrailingHeight;
+                        var width = layout.width + options.sheetAreaOffset.left;
+                        var height = void 0;
+                        var x = void 0;
+                        var y = void 0;
+                        var render = sheet._render;
+                        var ctx = render._getCtx();
                         var frozenTrailingRowStickToEdge = sheet._frozenTrailingRowStickToEdge;
                         if (sheet.tables && sheet.frozenRowCount() === 0) {
                             var rect = sheet.tables._getActiveTableRect();
@@ -14977,13 +15041,27 @@ module.exports = function (GC) {
                 ScrollService.prototype._getFirstFrozenTrailingRowOptions = function (sheet) {
                     var self = this, selections = sheet.getSelections();
                     if (selections.length === 1) {
-                        var isScrollByPixel = self._wb.options.scrollByPixel, newBottomRow = sheet.getViewportBottomRow(1), topSelectRow = selections[0].row, bottomSelectRow = selections[0].row + selections[0].rowCount - 1;
-                        var rowOptions = [], frozenRowLayouts = sheet._getRowLayout(2), hasFrozenRowLayouts = frozenRowLayouts && frozenRowLayouts.length > 0, frozenRow = hasFrozenRowLayouts ? frozenRowLayouts[0] : keyword_null, rowLayouts = sheet._getRowLayout(1), hasRowLayouts = rowLayouts && rowLayouts.length > 0, rowLayout = hasRowLayouts ? rowLayouts.findRow(newBottomRow) : keyword_null, isCleanFrozenRow = hasFrozenRowLayouts && hasRowLayouts && frozenRow.y !== (rowLayout.y + rowLayout.height);
-                        if ((bottomSelectRow === newBottomRow - 1
-                            || (topSelectRow <= newBottomRow && newBottomRow < bottomSelectRow)
-                            || topSelectRow === newBottomRow + 1
-                            || (isScrollByPixel && bottomSelectRow === newBottomRow && isCleanFrozenRow))
-                            && hasFrozenRowLayouts) {
+                        var isScrollByPixel = self._wb.options.scrollByPixel;
+                        var newBottomRow = sheet.getViewportBottomRow(1);
+                        var topSelectRow = selections[0].row;
+                        var bottomSelectRow = selections[0].row + selections[0].rowCount - 1;
+                        var rowOptions = [];
+                        var frozenRowLayouts = sheet._getRowLayout(2);
+                        var hasFrozenRowLayouts = frozenRowLayouts && frozenRowLayouts.length > 0;
+                        var frozenRow = hasFrozenRowLayouts ? frozenRowLayouts[0] : keyword_null;
+                        var rowLayouts = sheet._getRowLayout(1);
+                        var hasRowLayouts = rowLayouts && rowLayouts.length > 0;
+                        var rowLayout = hasRowLayouts ? rowLayouts.findRow(newBottomRow) : keyword_null;
+                        var isCleanFrozenRow = hasFrozenRowLayouts && hasRowLayouts && frozenRow.y !== (rowLayout.y + rowLayout.height);
+                        if (
+                            (
+                                bottomSelectRow === newBottomRow - 1
+                                || (topSelectRow <= newBottomRow && newBottomRow < bottomSelectRow)
+                                || topSelectRow === newBottomRow + 1
+                                || (isScrollByPixel && bottomSelectRow === newBottomRow && isCleanFrozenRow)
+                            )
+                            && hasFrozenRowLayouts
+                        ) {
                             rowOptions.push({
                                 layout: frozenRow
                             });
@@ -14999,7 +15077,8 @@ module.exports = function (GC) {
                         self._timer = keyword_null;
                     }
                     if (sheet) {
-                        var oldLeftCol = sheet._scrollLeftCol, oldLeftColOffset = sheet._scrollLeftColOffset;
+                        var oldLeftCol = sheet._scrollLeftCol;
+                        var oldLeftColOffset = sheet._scrollLeftColOffset;
                         var touchIgnoreJudge = !isNullOrUndefined(oldLeftColInTouch);
                         if (!touchIgnoreJudge && newLeftCol === oldLeftCol && newLeftColOffset === oldLeftColOffset) {
                             return;
@@ -15024,13 +15103,33 @@ module.exports = function (GC) {
                             }
                             return;
                         }
-                        var painted = false, options = sheet.options, offsetLeft = options.sheetAreaOffset.left;
+                        var painted = false;
+                        var options = sheet.options;
+                        var offsetLeft = options.sheetAreaOffset.left;
                         var adj = offsetLeft + 2;
-                        var bounds = sheet._bounds, layout = sheet._getSheetLayout(), viewportX = layout._viewportX, viewportWidth = sheet._getActualViewportWidth(layout), grayAreaWidth = layout._grayAreaWidth, frozenTrailingX = layout._frozenTrailingX, frozenTrailingWidth = layout._frozenTrailingWidth, height = layout.height + options.sheetAreaOffset.top, x = void 0, y = void 0, width = void 0;
-                        var render = sheet._render, ctx = render._getCtx();
+                        var bounds = sheet._bounds;
+                        var layout = sheet._getSheetLayout();
+                        var viewportX = layout._viewportX;
+                        var viewportWidth = sheet._getActualViewportWidth(layout);
+                        var grayAreaWidth = layout._grayAreaWidth;
+                        var frozenTrailingX = layout._frozenTrailingX;
+                        var frozenTrailingWidth = layout._frozenTrailingWidth;
+                        var height = layout.height + options.sheetAreaOffset.top;
+                        var x = void 0;
+                        var y = void 0;
+                        var width = void 0;
+                        var render = sheet._render;
+                        var ctx = render._getCtx();
                         var frozenTrailingColumnStickToEdge = sheet._frozenTrailingColumnStickToEdge;
-                        if (newLeftCol > oldLeftCol || (newLeftCol === oldLeftCol && Math_abs(newLeftColOffset) > Math_abs(oldLeftColOffset))) {
-                            var cl1 = void 0, cl2 = void 0;
+                        if (
+                            newLeftCol > oldLeftCol
+                            || (
+                                newLeftCol === oldLeftCol
+                                && Math_abs(newLeftColOffset) > Math_abs(oldLeftColOffset)
+                            )
+                        ) {
+                            var cl1 = void 0;
+                            var cl2 = void 0;
                             var colLayouts = sheet._getColumnLayout(1);
                             if (colLayouts && colLayouts.length > 0) {
                                 cl1 = colLayouts.findCol(newLeftCol);
@@ -15156,7 +15255,9 @@ module.exports = function (GC) {
                             || leftSelectCol === newRightCol + 1
                             || (isScrollByPixel && rightSelectCol === newRightCol && isCleanFrozenCol))
                             && hasFrozenColLayouts) {
-                            colOptions.push({ layout: frozenCol });
+                            colOptions.push({
+                                layout: frozenCol
+                            });
                         }
                         return colOptions;
                     }
@@ -15272,7 +15373,9 @@ module.exports = function (GC) {
                             var rowHeight = sheet._getZoomRowHeight(newTopRow);
                             newTopRowOffset = (height - translationY) - rowHeight;
                             if (workbook.options.scrollbarMaxAlign) {
-                                var layout = sheet._getSheetLayout(), startRow = sheet.frozenRowCount(), endRow = sheet.getRowCount() - sheet.frozenTrailingRowCount() - 1;
+                                var layout = sheet._getSheetLayout();
+                                var startRow = sheet.frozenRowCount();
+                                var endRow = sheet.getRowCount() - sheet.frozenTrailingRowCount() - 1;
                                 var result = sheet._getTopRowWhenLastRowShowCompleteForPixelScroll(sheet._getActualViewportHeight(layout), startRow, endRow);
                                 maxRow = result._row;
                                 var maxRowOffset = result._offset;
@@ -15514,22 +15617,31 @@ module.exports = function (GC) {
                 allowUndo: true,
                 // 允许工作簿重新排序
                 allowSheetReorder: true,
+                // 是否在电子表格中启用自动创建超链接
                 allowContextMenu: true,
+                // 是否允许用户在选择时可以使用取消选择，选择一块区域，按住ctrl可以取消选择一些区域
                 allowUserDeselect: true,
                 defaultDragFillType: 5,
                 showDragFillSmartTag: true,
                 showHorizontalScrollbar: true,
                 showVerticalScrollbar: true,
+                // 显示的滚动条是否基于工作表中的列数和行数
                 scrollbarShowMax: true,
+                // 滚动条是否与活动工作表的最后一行和最后一列对齐
                 scrollbarMaxAlign: false,
+                // 是否显示工作表标签条
                 tabStripVisible: true,
                 tabStripRatio: 0.5,
                 tabStripHost: '',
                 tabStripPosition: core_enum_1.TabStripPosition.bottom,
+                // 标签条位于左侧或右侧时的宽度。 默认值和最小值为 80。
                 tabStripWidth: DEFAULT_TAB_STRIP_WIDTH,
                 tabEditable: true,
+                // 电子表格是否显示特殊选项卡以允许用户插入新工作表。
                 newTabVisible: true,
+                // 复制或剪切所选项目时是否显示指示器
                 cutCopyIndicatorVisible: true,
+                // 选择一块区域，用户进行剪切或复制操作后，该区域显示的指示框的颜色
                 cutCopyIndicatorBorderColor: '#217346',
                 tabNavigationVisible: true,
                 backColor: 'white',
@@ -15539,37 +15651,54 @@ module.exports = function (GC) {
                 showDragDropTip: true,
                 showDragFillTip: true,
                 scrollIgnoreHidden: false,
+                // 是否高亮无效数据
                 highlightInvalidData: false,
                 showScrollTip: core_enum_1.ShowScrollTip.none,
+                // 用于表示灰色区域（内容区域的空白部分）背景颜色的颜色字符串，如“red”、“#FFFF00”、“rgb(255,0,0)”、“Accent 5”等。
                 grayAreaBackColor: keyword_null,
+                // 是否使用触摸布局来呈现Spread 组件
                 useTouchLayout: false,
+                // 当Spread组件没有焦点时是否显示选择高亮
                 hideSelection: false,
+                // 将行或列的大小调整为零时的绘制策略
                 resizeZeroIndicator: core_enum_1.ResizeZeroIndicator.enhanced,
                 // 允许用户编辑公式
                 allowUserEditFormula: true,
                 enableFormulaTextbox: true,
+                // 单元格公式中单元格和范围引用的样式。
                 referenceStyle: 0,
                 allowDynamicArray: false,
+                // 是否开启迭代计算
                 iterativeCalculation: true,
                 iterativeCalculationMaximumIterations: 1000,
+                // 迭代计算时的最大变化
                 iterativeCalculationMaximumChange: 0.01,
                 calcOnDemand: false,
                 autoFitType: core_enum_1.AutoFitType.cell,
                 allowCopyPasteExcelStyle: true,
+                // 如果粘贴范围不足以粘贴，是否扩展粘贴范围。盖值为false且区域不够时不允许黏贴
                 allowExtendPasteRange: false,
                 copyPasteHeaderOptions: core_enum_1.CopyPasteHeaderOptions.allHeaders,
                 // 允许通过鼠标拖拽来合并单元格
                 allowUserDragMerge: false,
                 rowResizeMode: core_enum_1.ResizeMode.normal,
                 columnResizeMode: core_enum_1.ResizeMode.normal,
+                // 是否开启像素精度滚动
                 scrollByPixel: false,
+                // 当 scrollByPixel 为真时，决定一次滚动该像素数。 
+                // 最终的滚动像素是滚动增量乘以滚动像素的结果。 
+                // 例如，滚动增量为 3，scrollPixel 为 5，最终滚动像素为 15。
                 scrollPixel: 5,
+                // 是否在电子表格中启用辅助功能支持
                 enableAccessibility: false,
                 allowAutoCreateHyperlink: true,
+                // 滚动条外观
                 scrollbarAppearance: core_enum_1.ScrollbarAppearance.skin,
                 font: keyword_null,
                 customList: [],
+                // 当日期/数字数据宽度大于列宽时更改显示模式。
                 numbersFitMode: core_enum_1.NumbersFitMode.mask,
+                // 是否粘贴跳过不可见范围
                 pasteSkipInvisibleRange: false
             };
             // 更改滚动条状态
@@ -15583,7 +15712,9 @@ module.exports = function (GC) {
             // 刷新VScroll容器
             function refreshVScrollContainer(container, vScrollbarContainerWidth, scrollbarSize) {
                 var themeStyle = common_1._ThemeStyleHelper._getCssClassThemeStyle('gc-vertical-scrollbar' + SCROLLBAR_PART_CLASS);
-                var paddingRight, paddingLeft, borderWidth = convertToInt(themeStyle.zIndex) > 2007 ? 1 : 0;
+                var paddingRight;
+                var paddingLeft;
+                var borderWidth = convertToInt(themeStyle.zIndex) > 2007 ? 1 : 0;
                 var interspace = vScrollbarContainerWidth - scrollbarSize;
                 if (interspace % 2 === 0) {
                     paddingRight = interspace / 2;
@@ -15608,7 +15739,9 @@ module.exports = function (GC) {
             // 刷新HScroll容器
             function refreshHScrollContainer(container, tabStripHeight, scrollbarSize) {
                 var themeStyle = common_1._ThemeStyleHelper._getCssClassThemeStyle('gc-horizontal-scrollbar' + SCROLLBAR_PART_CLASS);
-                var paddingBottom, paddingTop, borderWidth = convertToInt(themeStyle.zIndex) > 2007 ? 1 : 0;
+                var paddingBottom;
+                var paddingTop;
+                var borderWidth = convertToInt(themeStyle.zIndex) > 2007 ? 1 : 0;
                 var interspace = tabStripHeight - scrollbarSize;
                 if (interspace % 2 === 0) {
                     paddingBottom = interspace / 2;
@@ -15717,6 +15850,7 @@ module.exports = function (GC) {
                     self._activeSheetIndex = 0;
                     self._activeSheetTabIndex = -1;
                     self._suspendSetFocus = false;
+                    // 监听options上的属性变更并绑定回调来处理变更
                     self.options = createOptions(defaultOptions, function (pn, value, old) {
                         self._onOptionChanged(pn, value, old);
                     });
@@ -15787,6 +15921,7 @@ module.exports = function (GC) {
                         sheetSource._setCacheItemsToNull();
                     });
                 };
+                // Workbook的配置变更的处理
                 Workbook.prototype._onOptionChanged = function (pn, value, old) {
                     var self = this;
                     var sheet = getActiveSheet(self);
@@ -17022,7 +17157,7 @@ module.exports = function (GC) {
                     if (!table) {
                         return;
                     }
-                    return;
+                    // return;
                     var tableStyle = table.style;
                     var options = self.options;
                     var tabStripVisible = options.tabStripVisible;
@@ -23968,7 +24103,8 @@ module.exports = function (GC) {
                 },
                 _isValidPasteRange: function (row, column, rowCount, colCount, ignoreMax) {
                     var self = this;
-                    var maxRowCount = getSheetRowCount(self), maxColumnCount = getSheetColumnCount(self);
+                    var maxRowCount = getSheetRowCount(self);
+                    var maxColumnCount = getSheetColumnCount(self);
                     if (allowExtendPasteRange(self)) {
                         return -1 <= row && (ignoreMax || row < maxRowCount) && -1 <= column && (ignoreMax || column < maxColumnCount);
                     }
@@ -31180,10 +31316,12 @@ module.exports = function (GC) {
                                 return true;
                             }
                             rowLayout = rowLayoutModel[rowLayoutModel.length - 1];
-                            if (frozenTrailingRowCount > 0 &&
-                                mousePosition.y > layout._frozenTrailingY &&
-                                rowLayout.row >= sheet._getLastVisualRow() &&
-                                rowLayout.y + rowLayout.height <= layout._frozenTrailingY) {
+                            if (
+                                frozenTrailingRowCount > 0
+                                && mousePosition.y > layout._frozenTrailingY
+                                && rowLayout.row >= sheet._getLastVisualRow()
+                                && rowLayout.y + rowLayout.height <= layout._frozenTrailingY
+                            ) {
                                 hi._scrollRowViewportIndex = 2;
                                 return true;
                             }
@@ -37036,7 +37174,6 @@ module.exports = function (GC) {
                         if (self._inTransaction > 0) {
                             self._changes.push([['defaults', propName], oldValue]);
                         }
-
                         self._sheet._invalidate();
                     }
                     var defaults = self.defaults = {};
@@ -37230,7 +37367,9 @@ module.exports = function (GC) {
                         }
                         self_1._disposeAxisInfoCache();
                     }
-                    _SheetModelManager._callFeatureHandler(this, 'dispose', { clearCache: clearCache });
+                    _SheetModelManager._callFeatureHandler(this, 'dispose', {
+                        clearCache: clearCache
+                    });
                 };
                 _SheetModelManager.prototype.addRows = function (row, rowCount, sheetModelOnly, isUndoDeleteRows) {
                     var self = this;
@@ -37284,8 +37423,12 @@ module.exports = function (GC) {
                     if (self._inTransaction > 0) {
                         viewportSheetModelChanges = [];
                         rowHeaderSheetModelChanges = [];
-                        viewportSpanModelChanges = [['spanModels', 3], keyword_undefined];
-                        rowHeaderSpanModelChanges = [['spanModels', 2], keyword_undefined];
+                        viewportSpanModelChanges = [
+                            ['spanModels', 3], keyword_undefined
+                        ];
+                        rowHeaderSpanModelChanges = [
+                            ['spanModels', 2], keyword_undefined
+                        ];
                         viewportAxisModelChanges = [];
                         changeInfo = {
                             row: row,
@@ -37331,7 +37474,11 @@ module.exports = function (GC) {
                             changes.push(viewportAxisModelChanges[i]);
                         }
                     }
-                    self._updateAxisInfoCache({ type: core_enum_1.AxisInfoChangeType.deleteRows, index: row, count: rowCount });
+                    self._updateAxisInfoCache({
+                        type: core_enum_1.AxisInfoChangeType.deleteRows,
+                        index: row,
+                        count: rowCount
+                    });
                 };
                 _SheetModelManager.prototype._undoDeleteRows = function (changeInfo) {
                     var self = this;
@@ -46552,9 +46699,11 @@ module.exports = function (GC) {
                 InvalidType[InvalidType['pivotTable'] = 8] = 'pivotTable';
                 InvalidType[InvalidType['PTOverlapPT'] = 9] = 'PTOverlapPT';
             })(InvalidType = exports.InvalidType || (exports.InvalidType = {}));
+
             var defaultOptions = {
                 rowHeaderVisible: true,
                 colHeaderVisible: true,
+                // 剪贴板选项
                 clipBoardOptions: 0,
                 frozenlineColor: cssBlack,
                 rowHeaderAutoText: 1,
@@ -46579,7 +46728,9 @@ module.exports = function (GC) {
                 if (!parent) {
                     return;
                 }
-                var sheets = parent.sheets, len = sheets.length, currentSheet;
+                var sheets = parent.sheets;
+                var len = sheets.length;
+                var currentSheet;
                 for (var i = 0; i < len; i++) {
                     currentSheet = sheets[i];
                     if (currentSheet._isRecalculated === true) {
@@ -46587,7 +46738,6 @@ module.exports = function (GC) {
                     }
                 }
             }
-
             var Worksheet = (function () {
                 function Worksheet(name) {
                     var self = this;
@@ -46669,7 +46819,8 @@ module.exports = function (GC) {
                     }
                 };
                 Worksheet.prototype.name = function (value) {
-                    var self = this, parent = self.parent;
+                    var self = this;
+                    var parent = self.parent;
                     if (arguments.length === 0) {
                         return self._modelManager ? self._modelManager.getName() : '';
                     }
@@ -46686,7 +46837,8 @@ module.exports = function (GC) {
                     return this._isSelectedImp(selectedState);
                 };
                 Worksheet.prototype._isSelectedImp = function (selectedState, triggerEvent) {
-                    var self = this, spread = self.parent;
+                    var self = this;
+                    var spread = self.parent;
                     var currentSelectedState = self._modelManager ? self._modelManager._getSelectedState() : false;
                     if (isNullOrUndefined(selectedState)) {
                         return currentSelectedState;
@@ -46964,6 +47116,7 @@ module.exports = function (GC) {
                     self._updateActiveCellState(true);
                     self._invalidate();
                 };
+                // 获取或设置工作表的尾随冻结行数
                 Worksheet.prototype.frozenTrailingRowCount = function (rowCount, stickToEdge) {
                     var self = this;
                     if (arguments.length === 0) {
@@ -48398,7 +48551,8 @@ module.exports = function (GC) {
                                         if (commentHitInfo) {
                                             target.commentHitInfo = commentHitInfo;
                                         } else {
-                                            var floatingObjectModel = self._floatingObjectModel, floatObjectInfo = floatingObjectModel && floatingObjectModel.hitTest(x, y, ignoreProtected);
+                                            var floatingObjectModel = self._floatingObjectModel;
+                                            var floatObjectInfo = floatingObjectModel && floatingObjectModel.hitTest(x, y, ignoreProtected);
                                             var shapeHitInfo = void 0;
                                             if (self.shapes) {
                                                 shapeHitInfo = self.shapes.hitTest(x, y);
@@ -48845,6 +48999,7 @@ module.exports = function (GC) {
                         viewport: keyword_null
                     };
                 };
+                // 更新控件布局信息
                 Worksheet.prototype.invalidateLayout = function () {
                     var self = this;
                     var eventHandler = self._eventHandler;
@@ -48865,7 +49020,12 @@ module.exports = function (GC) {
                     Worksheet._callFeatureHandler(self, const_onLayoutChanged, {
                         changeType: 'invalidateLayout'
                     });
-                    if (eventHandler && eventHandler._updateValidationUI && common_1._FocusHelper._isActiveElement(self) && !eventHandler._isClickFloatobjectOrShape(self)) {
+                    if (
+                        eventHandler
+                        && eventHandler._updateValidationUI
+                        && common_1._FocusHelper._isActiveElement(self)
+                        && !eventHandler._isClickFloatobjectOrShape(self)
+                    ) {
                         eventHandler._updateValidationUI(self._activeRowIndex, self._activeColIndex);
                     }
                     self._dirty = true;

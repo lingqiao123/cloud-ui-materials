@@ -60,7 +60,7 @@ export default {
             for (let n = 0; n < sels.length; n++) {
                 const sel = sels[n];
                 const cellRange = sheet.getRange(sel.row, sel.col, sel.rowCount, sel.colCount);
-                cellRange.setPerm();
+                cellRange.setEditable();
             }
             sheet.resumePaint();
         },
@@ -72,6 +72,7 @@ export default {
                 if(this.option) {
                    Object.assign(options, this.option);
                 }
+                // options.resizeZeroIndicator = 'enhanced';
                 const spread = this.spread;
                 if(!spread) {
                     this.spread = new GC.Spread.Sheets.Workbook(this.$refs.main, options);
@@ -83,9 +84,6 @@ export default {
 		            spread.repaint();
                 }
                 // const sheet = this.spread.sheets[0];
-                // sheet.options.protectionOptions = {
-                //     allowSelectLockedCells: false
-                // };
                 // sheet.options.isProtected = true;
             }
         },
