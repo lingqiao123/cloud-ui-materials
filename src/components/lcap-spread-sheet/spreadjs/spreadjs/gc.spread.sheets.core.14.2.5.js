@@ -8715,7 +8715,8 @@ module.exports = function (GC) {
                     self.dpr = ratio;
                     var ownerWorkbook = workbook ? workbook : sheet && sheet.parent;
                     if (ownerWorkbook) {
-                        var cache = self._spreadCanvasCaches, spreadCache = void 0;
+                        var cache = self._spreadCanvasCaches;
+                        var spreadCache = void 0;
                         for (var i = 0; i < cache.length; i++) {
                             if (ownerWorkbook === cache[i].workbook) {
                                 spreadCache = cache[i];
@@ -8723,13 +8724,18 @@ module.exports = function (GC) {
                             }
                         }
                         if (!spreadCache) {
-                            spreadCache = { workbook: ownerWorkbook, sheets: [], canvases: [] };
+                            spreadCache = { 
+                                workbook: ownerWorkbook, 
+                                sheets: [], 
+                                canvases: [] 
+                            };
                             cache.push(spreadCache);
                         }
                         if (workbook) {
                             spreadCache.canvases.push(canvas);
                         } else {
-                            var cacheSheet = void 0, sheets = spreadCache.sheets;
+                            var cacheSheet = void 0;
+                            var sheets = spreadCache.sheets;
                             for (var j = 0; j < sheets.length; j++) {
                                 if (sheets[j].sheet === sheet) {
                                     cacheSheet = sheets[j];
@@ -16683,7 +16689,7 @@ module.exports = function (GC) {
                     self._createHeaderCorner();
                     self._createFooterCorner();
                 };
-                // 创建左上角
+                //
                 Workbook.prototype._createHeaderCorner = function () {
                     var self = this;
                     var table = self._table;
@@ -16770,13 +16776,16 @@ module.exports = function (GC) {
                     self._adjustScrollbarDOMStructure();
                 };
                 Workbook.prototype._adjustScrollbarDOMStructure = function () {
-                    var self = this, host = self._host;
+                    var self = this;
+                    var host = self._host;
                     if (!self._scrollService) {
                         return;
                     }
                     var isMobileScrollbar = self.options.scrollbarAppearance === core_enum_1.ScrollbarAppearance.mobile;
-                    var skinScrollbarVHost = self._vSkinScrollbarContainer, skinScrollbarHHost = self._hSkinScrollbarContainer;
-                    var scrollbarVContainer = self._vScrollbarContainer, scrollbarHContainer = self._hScrollbarContainer;
+                    var skinScrollbarVHost = self._vSkinScrollbarContainer;
+                    var skinScrollbarHHost = self._hSkinScrollbarContainer;
+                    var scrollbarVContainer = self._vScrollbarContainer;
+                    var scrollbarHContainer = self._hScrollbarContainer;
                     domUtil_1.GC$(scrollbarVContainer).removeAttr('style');
                     domUtil_1.GC$(scrollbarHContainer).removeAttr('style');
                     if (!isMobileScrollbar) {
@@ -16820,14 +16829,14 @@ module.exports = function (GC) {
                 };
                 // 为选项卡创建焦点元素
                 Workbook.prototype._createFocusElementForTab = function (host) {
-                    var self = this, TAB_INDEX = 'tabindex';
+                    var self = this;
+                    var TAB_INDEX = 'tabindex';
                     var tabIndex = convertToInt(domUtil_1.GC$(host).attr(TAB_INDEX), 10) || 0;
                     var focusElement = createElement(TAG_DIV);
                     domUtil_1.GC$(focusElement).css({
                         position: CSS_ABSOLUTE,
                         overflow: 'hidden'
-                    })
-                        .attr(GC_UIELEMENT, 'gcSheetFocusElementForTab')
+                    }).attr(GC_UIELEMENT, 'gcSheetFocusElementForTab')
                         .attr(TAB_INDEX, tabIndex)
                         .bind(E_FOCUS, function () {
                             if (!self._ignoreFocusEvent) {
@@ -30957,7 +30966,10 @@ module.exports = function (GC) {
                 _SheetEventHandler.prototype._getCanvasPosition = function () {
                     var p = domUtil_1.GC$(this._sheet._getCanvas()).position();
                     if (!p) {
-                        p = { top: 0, left: 0 };
+                        p = {
+                            top: 0,
+                            left: 0
+                        };
                     }
                     return p;
                 };
@@ -37142,15 +37154,21 @@ module.exports = function (GC) {
                 }
                 return spans;
             }
+            // 模型管理器
             var _SheetModelManager = (function () {
                 function _SheetModelManager(sheet, viewportRowCount, viewportColCount, colHeaderRowCount, rowHeaderColCount, name) {
                     this._dynamicArrayUpdateInfos = [];
                     var self = this;
                     self._sheet = sheet;
+                    // 工作表模型主要有4类，对应不同的区域
                     self.sheetModels = [
+                        // 左上角单元格
                         keyword_undefined,
+                        // 列标题区域
                         new _SheetModel(colHeaderRowCount, viewportColCount),
+                        // 行标题区域
                         new _SheetModel(viewportRowCount, rowHeaderColCount),
+                        // 视口区域
                         new _SheetModel(viewportRowCount, viewportColCount)
                     ];
                     var rowInfos = self.rowInfos = [];
@@ -37165,14 +37183,19 @@ module.exports = function (GC) {
                         new _SpanModel(),
                         new _SpanModel()
                     ];
+                    // 选择模型
                     self.selectionModel = new _SelectionModel();
+                    // 动态数组管理器 
                     self._dynamicArrayManager = new _DynamicArrayManager(self);
                     self.name = name || '';
                     self.isSelected = false;
                     self.zoomFactor = 1;
                     function setCallback(obj, value, propName, oldValue) {
                         if (self._inTransaction > 0) {
-                            self._changes.push([['defaults', propName], oldValue]);
+                            self._changes.push([
+                                ['defaults', propName],
+                                oldValue
+                            ]);
                         }
                         self._sheet._invalidate();
                     }
@@ -37814,10 +37837,10 @@ module.exports = function (GC) {
                         rowHeight: optionDefaults.rowHeight,
                         _isExcelDefaultColumnWidth: optionDefaults._isExcelDefaultColumnWidth
                     };
-                    var isSameWithDefaults = defaults.rowHeight === DEFAULT_ROW_HEIGHT &&
-                        defaults.colWidth === DEFAULT_COL_WIDTH &&
-                        defaults.rowHeaderColWidth === DEFAULT_ROW_HEADER_COL_WIDTH &&
-                        defaults.colHeaderRowHeight === DEFAULT_COL_HEADER_ROW_HEIGHT;
+                    var isSameWithDefaults = defaults.rowHeight === DEFAULT_ROW_HEIGHT
+                        && defaults.colWidth === DEFAULT_COL_WIDTH
+                        && defaults.rowHeaderColWidth === DEFAULT_ROW_HEADER_COL_WIDTH
+                        && defaults.colHeaderRowHeight === DEFAULT_COL_HEADER_ROW_HEIGHT;
                     if (!isSameWithDefaults) {
                         json.defaults = defaults;
                     }
@@ -37839,7 +37862,10 @@ module.exports = function (GC) {
                             var index = indexKeys_1[_i];
                             var axisInfo = setting.rows[index];
                             if (!isNullOrUndefined(axisInfo)) {
-                                self._updateAxisInfoCache({ type: core_enum_1.AxisInfoChangeType.setRowHeight, index: +index });
+                                self._updateAxisInfoCache({
+                                    type: core_enum_1.AxisInfoChangeType.setRowHeight,
+                                    index: +index
+                                });
                             }
                         }
                     }
@@ -37849,7 +37875,10 @@ module.exports = function (GC) {
                             var index = indexKeys_2[_a];
                             var axisInfo = setting.columns[index];
                             if (!isNullOrUndefined(axisInfo)) {
-                                self._updateAxisInfoCache({ type: core_enum_1.AxisInfoChangeType.setColumnWidth, index: +index });
+                                self._updateAxisInfoCache({
+                                    type: core_enum_1.AxisInfoChangeType.setColumnWidth,
+                                    index: +index
+                                });
                             }
                         }
                     }
@@ -38016,7 +38045,9 @@ module.exports = function (GC) {
                     }
                     var tableChanges = changes && changes._tableChanges;
                     if (tableChanges && tableChanges.length > 0) {
-                        _SheetModelManager._callFeatureHandler(this, UNDO_TEXT, { _tableChanges: tableChanges });
+                        _SheetModelManager._callFeatureHandler(this, UNDO_TEXT, {
+                            _tableChanges: tableChanges
+                        });
                         delete changes._tableChanges;
                     }
                     var calcChanges = changes && changes.calc;
@@ -38165,8 +38196,13 @@ module.exports = function (GC) {
                         var valueChangeInfo = void 0;
                         var dirtyChangeInfo = void 0;
                         if (_this._inTransaction > 0 && !isSpillValue) {
-                            valueChangeInfo = [['sheetModels', sheetArea], keyword_undefined];
-                            dirtyChangeInfo = { sheetArea: sheetArea };
+                            valueChangeInfo = [
+                                ['sheetModels', sheetArea],
+                                keyword_undefined
+                            ];
+                            dirtyChangeInfo = {
+                                sheetArea: sheetArea
+                            };
                         }
                         _this._getSheetModel(sheetArea).setValue(row, col, value, valueChangeInfo, dirtyChangeInfo);
                         if (valueChangeInfo && valueChangeInfo.length > 0) {
@@ -38195,10 +38231,12 @@ module.exports = function (GC) {
                             sheet._raiseCellChanged('value', row, col, sheetArea, oldValue, (isDate && dateValue) ? dateValue : value);
                         }
                     } else {
-                        sheet._clearCameraShapeCache(sheet, [{
-                            row: row,
-                            col: col
-                        }], 0);
+                        sheet._clearCameraShapeCache(sheet, [
+                            {
+                                row: row,
+                                col: col
+                            }
+                        ], 0);
                     }
                     if (needApplyChanges) {
                         _this.applyDynamicChanges();
@@ -38235,7 +38273,10 @@ module.exports = function (GC) {
                     if (isNullOrUndefined(sheetArea)) {
                         sheetArea = 3;
                     }
-                    var changeInfo = this._inTransaction > 0 ? [['sheetModels', sheetArea], keyword_undefined] : keyword_undefined;
+                    var changeInfo = this._inTransaction > 0 ? [
+                        ['sheetModels', sheetArea],
+                        keyword_undefined
+                    ] : keyword_undefined;
                     this._getSheetModel(sheetArea).setStyle(row, col, style, changeInfo);
                     if (changeInfo && changeInfo.length > 0) {
                         this._changes.push(changeInfo);
@@ -38248,7 +38289,10 @@ module.exports = function (GC) {
                     if (isNullOrUndefined(sheetArea)) {
                         sheetArea = 3;
                     }
-                    var changeInfo = this._inTransaction > 0 ? [['sheetModels', sheetArea], keyword_undefined] : keyword_undefined;
+                    var changeInfo = this._inTransaction > 0 ? [
+                        ['sheetModels', sheetArea],
+                        keyword_undefined
+                    ] : keyword_undefined;
                     this._getSheetModel(sheetArea).setValueForKey(row, col, key, value, changeInfo);
                     if (changeInfo && changeInfo.length > 0) {
                         this._changes.push(changeInfo);
@@ -38278,8 +38322,14 @@ module.exports = function (GC) {
                     }
                     this._getSheetModel(sheetArea).clear(row, column, rowCount, columnCount, type, ignoredRowList, changeInfos);
                     _SheetModelManager._callFeatureHandler(this, 'clear', {
-                        row: row, col: column, rowCount: rowCount, colCount: columnCount,
-                        type: type, ignoredRowList: ignoredRowList, sheetArea: sheetArea, changes: this._changes
+                        row: row,
+                        col: column,
+                        rowCount: rowCount,
+                        colCount: columnCount,
+                        type: type,
+                        ignoredRowList: ignoredRowList,
+                        sheetArea: sheetArea,
+                        changes: this._changes
                     });
                     if (changeInfos) {
                         var partOfPath = ['sheetModels', sheetArea];
@@ -38363,13 +38413,22 @@ module.exports = function (GC) {
                     this._getSheetModel(sheetArea)._dirtyNodes = {};
                 };
                 _SheetModelManager.prototype._clearInsertChangeNodes = function (isClearWholeRowCol, isWholeRow, row, rowCount) {
-                    var dirtyNodes = this._getDirtyNodes(), t, node, rowIndex;
+                    var dirtyNodes = this._getDirtyNodes();
+                    var t;
+                    var node, rowIndex;
                     if (dirtyNodes) {
                         for (t in dirtyNodes) {
                             if (_hasOwnProperty(dirtyNodes, t)) {
                                 node = dirtyNodes[t];
                                 rowIndex = parseInt(t, 10);
-                                if (node && node.rs === 'n' && (isClearWholeRowCol || (isWholeRow && row <= rowIndex && rowIndex < row + rowCount))) {
+                                if (
+                                    node
+                                    && node.rs === 'n'
+                                    && (
+                                        isClearWholeRowCol
+                                        || (isWholeRow && row <= rowIndex && rowIndex < row + rowCount)
+                                    )
+                                ) {
                                     dirtyNodes[t] = {};
                                 }
                             }
@@ -38377,7 +38436,10 @@ module.exports = function (GC) {
                     }
                 };
                 _SheetModelManager.prototype._clearDirtyChangeNodes = function (isWholeRow, row, col, rowCount, colCount) {
-                    var self = this, dirtyNodes = self._getDirtyNodes(), sheet = self._sheet, tables = sheet.tables;
+                    var self = this;
+                    var dirtyNodes = self._getDirtyNodes();
+                    var sheet = self._sheet;
+                    var tables = sheet.tables;
                     if (!$_isEmptyObject(dirtyNodes)) {
                         var rowArray = [];
                         if (row >= 0) {
@@ -38391,21 +38453,29 @@ module.exports = function (GC) {
                                 }
                             }
                         }
-                        var wholeTableList = [], intersectTableList_1 = [];
+                        var wholeTableList = [];
+                        var intersectTableList_1 = [];
                         if (tables) {
                             wholeTableList = tables._getWholeTablesInRange(row, col, rowCount, colCount);
                             intersectTableList_1 = tables._getIntersectTablesInRange(row, col, rowCount, colCount);
                             if (wholeTableList.length > 0) {
-                                _SheetModelManager._callFeatureHandler(this, 'clearPendingChanges', { tableList: wholeTableList });
+                                _SheetModelManager._callFeatureHandler(this, 'clearPendingChanges', {
+                                    tableList: wholeTableList
+                                });
                             }
                         }
-                        var dirtyRow_1, node_1;
+                        var dirtyRow_1;
+                        var node_1;
                         $_each(rowArray, function (i, index) {
                             dirtyRow_1 = dirtyNodes[index];
                             if (dirtyRow_1 && dirtyRow_1.rs === 'e') {
                                 var intersectTableListLength = intersectTableList_1.length;
                                 if (isWholeRow) {
-                                    if ((!tables || intersectTableListLength === 0 || !tables._isCellInTableList(intersectTableList_1, index, -1))) {
+                                    if ((
+                                        !tables
+                                        || intersectTableListLength === 0
+                                        || !tables._isCellInTableList(intersectTableList_1, index, -1)
+                                    )) {
                                         dirtyNodes[index] = {};
                                     } else {
                                         var cc = sheet.getColumnCount();
@@ -38420,7 +38490,11 @@ module.exports = function (GC) {
                                     }
                                 } else {
                                     for (var columnIndex = col; columnIndex < col + colCount; columnIndex++) {
-                                        if (!tables || intersectTableListLength === 0 || !tables._isCellInTableList(intersectTableList_1, index, columnIndex)) {
+                                        if (
+                                            !tables
+                                            || intersectTableListLength === 0
+                                            || !tables._isCellInTableList(intersectTableList_1, index, columnIndex)
+                                        ) {
                                             node_1 = dirtyRow_1[columnIndex];
                                             if (node_1) {
                                                 delete dirtyRow_1[columnIndex];
@@ -38433,7 +38507,8 @@ module.exports = function (GC) {
                     }
                 };
                 _SheetModelManager.prototype._clearAllDirtyChangeNodes = function () {
-                    var self = this, dirtyNodes = self._getDirtyNodes();
+                    var self = this;
+                    var dirtyNodes = self._getDirtyNodes();
                     for (var r in dirtyNodes) {
                         if (_hasOwnProperty(dirtyNodes, r)) {
                             if (dirtyNodes[r].rs === 'e') {
@@ -38459,7 +38534,10 @@ module.exports = function (GC) {
                 _SheetModelManager.prototype.setName = function (name) {
                     var _this = this;
                     if (_this._inTransaction > 0) {
-                        _this._changes.push({ type: 'setName', value: _this.name });
+                        _this._changes.push({
+                            type: 'setName',
+                            value: _this.name
+                        });
                     }
                     _this.name = name;
                 };
@@ -38570,7 +38648,10 @@ module.exports = function (GC) {
                     if (isNullOrUndefined(sheetArea)) {
                         sheetArea = 3;
                     }
-                    var changeInfo = this._inTransaction > 0 ? [['spanModels', sheetArea], keyword_undefined] : keyword_undefined;
+                    var changeInfo = this._inTransaction > 0 ? [
+                        ['spanModels', sheetArea],
+                        keyword_undefined
+                    ] : keyword_undefined;
                     this._getSpanModel(sheetArea).remove(range, changeInfo);
                     if (changeInfo && changeInfo.length > 0) {
                         this._changes.push(changeInfo);
@@ -38580,7 +38661,10 @@ module.exports = function (GC) {
                     if (isNullOrUndefined(sheetArea)) {
                         sheetArea = 3;
                     }
-                    var changeInfo = this._inTransaction > 0 ? [['spanModels', sheetArea], keyword_undefined] : keyword_undefined;
+                    var changeInfo = this._inTransaction > 0 ? [
+                        ['spanModels', sheetArea],
+                        keyword_undefined
+                    ] : keyword_undefined;
                     this._getSpanModel(sheetArea).add(range, changeInfo);
                     if (changeInfo && changeInfo.length > 0) {
                         this._changes.push(changeInfo);
@@ -38590,7 +38674,10 @@ module.exports = function (GC) {
                     if (isNullOrUndefined(sheetArea)) {
                         sheetArea = 3;
                     }
-                    var changeInfo = this._inTransaction > 0 ? [['spanModels', sheetArea], keyword_undefined] : keyword_undefined;
+                    var changeInfo = this._inTransaction > 0 ? [
+                        ['spanModels', sheetArea],
+                        keyword_undefined
+                    ] : keyword_undefined;
                     this._getSpanModel(sheetArea)._clear(row, col, rowCount, colCount, changeInfo);
                     if (changeInfo && changeInfo.length > 0) {
                         this._changes.push(changeInfo);
@@ -38600,7 +38687,10 @@ module.exports = function (GC) {
                     if (isNullOrUndefined(sheetArea)) {
                         sheetArea = 3;
                     }
-                    var changeInfo = this._inTransaction > 0 ? [['spanModels', sheetArea], keyword_undefined] : keyword_undefined;
+                    var changeInfo = this._inTransaction > 0 ? [
+                        ['spanModels', sheetArea],
+                        keyword_undefined
+                    ] : keyword_undefined;
                     this._getSpanModel(sheetArea)._move(fromRow, fromCol, toRow, toCol, rowCount, colCount, changeInfo);
                     if (changeInfo && changeInfo.length > 0) {
                         this._changes.push(changeInfo);
@@ -38610,7 +38700,10 @@ module.exports = function (GC) {
                     if (isNullOrUndefined(sheetArea)) {
                         sheetArea = 3;
                     }
-                    var changeInfo = this._inTransaction > 0 ? [['spanModels', sheetArea], keyword_undefined] : keyword_undefined;
+                    var changeInfo = this._inTransaction > 0 ? [
+                        ['spanModels', sheetArea],
+                        keyword_undefined
+                    ] : keyword_undefined;
                     this._getSpanModel(sheetArea)._copy(fromRow, fromCol, toRow, toCol, rowCount, colCount, changeInfo);
                     if (changeInfo && changeInfo.length > 0) {
                         this._changes.push(changeInfo);
@@ -38656,7 +38749,10 @@ module.exports = function (GC) {
                     return this.selectionModel.getProperty('activeSelectedRangeIndex');
                 };
                 _SheetModelManager.prototype.setActiveSelectedRangeIndex = function (value) {
-                    var changeInfo = this._inTransaction > 0 ? [['selectionModel'], keyword_undefined] : keyword_undefined;
+                    var changeInfo = this._inTransaction > 0 ? [
+                        ['selectionModel'],
+                        keyword_undefined
+                    ] : keyword_undefined;
                     this.selectionModel.setProperty('activeSelectedRangeIndex', value, changeInfo);
                     if (changeInfo) {
                         this._changes.push(changeInfo);
@@ -38708,7 +38804,13 @@ module.exports = function (GC) {
                     if (isNullOrUndefined(sheetArea)) {
                         sheetArea = 3;
                     }
-                    var changeInfo = this._inTransaction > 0 ? [[isRow ? ROW_INFOS_TEXT : COL_INFOS_TEXT, sheetArea], keyword_undefined] : keyword_undefined;
+                    var changeInfo = this._inTransaction > 0 ? [
+                        [
+                            isRow ? ROW_INFOS_TEXT : COL_INFOS_TEXT,
+                            sheetArea
+                        ],
+                        keyword_undefined
+                    ] : keyword_undefined;
                     var axisModel = this._getAxisModel(isRow, sheetArea);
                     axisModel.setPageBreak(index, value, changeInfo);
                     if (changeInfo) {
@@ -38724,14 +38826,24 @@ module.exports = function (GC) {
                     if (isNullOrUndefined(sheetArea)) {
                         sheetArea = 3;
                     }
-                    var changeInfo = self._inTransaction > 0 ? [[isRow ? ROW_INFOS_TEXT : COL_INFOS_TEXT, sheetArea], keyword_undefined] : keyword_undefined;
+                    var changeInfo = self._inTransaction > 0 ? [
+                        [
+                            isRow ? ROW_INFOS_TEXT : COL_INFOS_TEXT,
+                            sheetArea
+                        ],
+                        keyword_undefined
+                    ] : keyword_undefined;
                     var axisModel = self._getAxisModel(isRow, sheetArea);
                     axisModel.setVisible(index, value, changeInfo);
                     if (changeInfo) {
                         self._changes.push(changeInfo);
                     }
                     var type = isRow ? core_enum_1.AxisInfoChangeType.setRowVisible : core_enum_1.AxisInfoChangeType.setColumnVisible;
-                    self._updateAxisInfoCache({ type: type, index: index, sheetArea: sheetArea });
+                    self._updateAxisInfoCache({
+                        type: type,
+                        index: index,
+                        sheetArea: sheetArea
+                    });
                 };
                 _SheetModelManager.prototype.getResizable = function (isRow, sheetArea, index) {
                     var axisModel = this._getAxisModel(isRow, sheetArea);
@@ -38741,7 +38853,13 @@ module.exports = function (GC) {
                     if (isNullOrUndefined(sheetArea)) {
                         sheetArea = 3;
                     }
-                    var changeInfo = this._inTransaction > 0 ? [[isRow ? ROW_INFOS_TEXT : COL_INFOS_TEXT, sheetArea], keyword_undefined] : keyword_undefined;
+                    var changeInfo = this._inTransaction > 0 ? [
+                        [
+                            isRow ? ROW_INFOS_TEXT : COL_INFOS_TEXT,
+                            sheetArea
+                        ],
+                        keyword_undefined
+                    ] : keyword_undefined;
                     var axisModel = this._getAxisModel(isRow, sheetArea);
                     axisModel.setResizable(index, value, changeInfo);
                     if (changeInfo) {
@@ -38765,7 +38883,13 @@ module.exports = function (GC) {
                     if (isNullOrUndefined(sheetArea)) {
                         sheetArea = 3;
                     }
-                    var changeInfo = self._inTransaction > 0 ? [[isRow ? ROW_INFOS_TEXT : COL_INFOS_TEXT, sheetArea], keyword_undefined] : keyword_undefined;
+                    var changeInfo = self._inTransaction > 0 ? [
+                        [
+                            isRow ? ROW_INFOS_TEXT : COL_INFOS_TEXT,
+                            sheetArea
+                        ],
+                        keyword_undefined
+                    ] : keyword_undefined;
                     var axisModel = self._getAxisModel(isRow, sheetArea);
                     axisModel.setSize(index, value, changeInfo);
                     if (changeInfo) {
@@ -38773,7 +38897,12 @@ module.exports = function (GC) {
                     }
                     self.setStarSize(isRow, sheetArea, index, keyword_null);
                     var type = isRow ? core_enum_1.AxisInfoChangeType.setRowHeight : core_enum_1.AxisInfoChangeType.setColumnWidth;
-                    self._updateAxisInfoCache({ type: type, index: index, value: value, sheetArea: sheetArea });
+                    self._updateAxisInfoCache({
+                        type: type,
+                        index: index,
+                        value: value,
+                        sheetArea: sheetArea
+                    });
                 };
                 _SheetModelManager.prototype.setStarSize = function (isRow, sheetArea, index, value) {
                     if (isNullOrUndefined(sheetArea)) {
@@ -41972,8 +42101,11 @@ module.exports = function (GC) {
                     }
                 };
                 _CutCopyIndicatorManager.prototype._bindEvents = function () {
-                    var self = this, sheet = self._sheet, cacheNeedPaintIndicator = false;
-                    var CONST_RESIZABLE = 'resizable', CONST_ISVISIBLE = 'isVisible';
+                    var self = this;
+                    var sheet = self._sheet;
+                    var cacheNeedPaintIndicator = false;
+                    var CONST_RESIZABLE = 'resizable';
+                    var CONST_ISVISIBLE = 'isVisible';
                     function setNeedPaintFalseHandler() {
                         self._needPaint && self._needPaintIndicator(false);
                     }
@@ -42002,7 +42134,9 @@ module.exports = function (GC) {
                         cacheNeedPaintIndicator = self._needPaintIndicator();
                     });
                     sheet._bind(Events_ClipboardPasted + CUTCOPYINDICATOR_EVENT_NS, function (event, args) {
-                        var cellRange = args.cellRange, ch = args.sheet._getClipboardHelper(), ranges = ch._ranges;
+                        var cellRange = args.cellRange;
+                        var ch = args.sheet._getClipboardHelper();
+                        var ranges = ch._ranges;
                         var needPaint = cacheNeedPaintIndicator;
                         var pasteFromSystem;
                         if (cellRange && ranges && ch._fromSheet) {
@@ -46878,18 +47012,25 @@ module.exports = function (GC) {
                     var self = this;
                     var oldName = self.name();
                     if (!isFromJSON) {
-                        Worksheet._callFeatureHandler(self, 'beforeSetName', { oldName: oldName, newName: name });
+                        Worksheet._callFeatureHandler(self, 'beforeSetName', {
+                            oldName: oldName,
+                            newName: name
+                        });
                     }
                     this._modelManager.do('setName', name);
                     if (!isFromJSON) {
-                        Worksheet._callFeatureHandler(self, 'setName', { oldName: oldName, newName: name });
+                        Worksheet._callFeatureHandler(self, 'setName', {
+                            oldName: oldName,
+                            newName: name
+                        });
                     }
                 };
                 Worksheet.prototype.addRows = function (row, count, rowExpand) {
                     if (count <= 0) {
                         return;
                     }
-                    var self = this, oldRowCount = getRowCount(self);
+                    var self = this;
+                    var oldRowCount = getRowCount(self);
                     if (row < 0 || row > oldRowCount) {
                         row = oldRowCount;
                     }
@@ -46945,7 +47086,8 @@ module.exports = function (GC) {
                     self._modelManager.setCellState(rowIndex, colIndex, core_enum_1.CellStatesType.active, isAdd, core_enum_1.SheetArea.viewport);
                 };
                 Worksheet.prototype.deleteRows = function (row, count) {
-                    var self = this, oldRowCount = getRowCount(self);
+                    var self = this;
+                    var oldRowCount = getRowCount(self);
                     if (0 > row || row >= oldRowCount || count <= 0) {
                         return;
                     }
@@ -47011,7 +47153,8 @@ module.exports = function (GC) {
                     if (count <= 0) {
                         return;
                     }
-                    var self = this, oldColCount = getColumnCount(self);
+                    var self = this;
+                    var oldColCount = getColumnCount(self);
                     if (col < 0 || col > oldColCount) {
                         col = oldColCount;
                     }
